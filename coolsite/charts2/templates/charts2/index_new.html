@@ -1,0 +1,25 @@
+{% extends 'charts2/base.html' %}
+{% load render_table from django_tables2 %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h1>{{title}}</h1>
+
+{% if objs %}  
+    <img src="data:image/png;base64, {{chart1|safe}}">
+
+{% render_table table %}
+
+{% else %}    
+    <form action="" method="post">
+        {% csrf_token %}
+        {{search_form|crispy}}
+        <button class="btn btn-primary mt-3" type="submit">Search</button>
+    </form>
+    
+{% endif %}
+
+{% endblock %}
+
+
+

@@ -1,0 +1,74 @@
+{% extends 'charts2/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<h1>{{title}}</h1>
+
+{% if objs %}  
+    <img src="data:image/png;base64, {{chart1|safe}}">
+
+    <table id="myTable" class="table table-bordered table-condensed">
+        <thead>
+            <tr>
+                <th>Номер</th>
+    {% for i in n %}             
+                <th>{{ i }}</th>
+    {% endfor %} 
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>Дата</td>
+    {% for item in objs %}             
+                <td>{{ item.time_measure }}</td>
+    {% endfor %}
+            </tr>
+            <tr>
+                <td>Форма</td>
+    {% for item in objs %}             
+                <td>{{ item.form }}</td>
+    {% endfor %}
+            </tr>
+            <tr>
+                <td>diameter</td>
+    {% for item in objs %}
+                <td>{{ item.diameter }}</td>
+    {% endfor %}
+            </tr>
+            <tr>
+                <td>value1</td>
+    {% for item in objs %}            
+                <td>{{ item.value1 }}</td>
+    {% endfor %}            
+            </tr>
+            <tr>
+                <td>value2</td>    
+    {% for item in objs %}            
+                <td>{{ item.value2 }}</td>
+    {% endfor %} 
+            </tr>
+            <tr>
+                <td>value3</td>    
+    {% for item in objs %}            
+                <td>{{ item.value3 }}</td>
+    {% endfor %}            
+            </tr>
+    
+        </tbody>
+    
+    </table>
+    
+{% else %}    
+    <form action="" method="post">
+        {% csrf_token %}
+        {{search_form|crispy}}
+        <button class="btn btn-primary mt-3" type="submit">Search</button>
+    </form>
+    
+{% endif %}
+
+{% endblock %}
+
+
+
