@@ -5,34 +5,11 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
 class ChartsSearchForm(forms.Form):
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        choices_kd = Kind.objects.order_by('name')
-        choices_con = Consumer.objects.order_by('name')
-        choices_con = Grade.objects.order_by('name')
-        choice_list_kd = []
-        choice_list_con = []
-        choice_list_gr = []
-
-        for item in choices_kd:
-            choice_list_kd.append(item)
-        self.fields['kd'].choices = choice_list_kd
-        for item in choices_kd:
-            choice_list_con.append(item)
-        self.fields['con'].choices = choice_list_con
-        for item in choices_kd:
-            choice_list_gr.append(item)
-        self.fields['gr'].choices = choice_list_gr
-
     date_from = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label="Начальная дата")
     date_to = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}), label="Конечная дата")
-    # kd = forms.ChoiceField(choices=[(n.id, n.name) for n in Kind.objects.order_by('name')], label="Вид продукции")
-    kd = forms.ChoiceField(label="Вид продукции")
-    # con = forms.ChoiceField(choices=[(m.id, m.name) for m in Consumer.objects.order_by('name')], label="Потребитель")
-    con = forms.ChoiceField(label="Потребитель")
-    # gr = forms.ChoiceField(choices=[(x.id, x.name) for x in Grade.objects.order_by('name')], label="Марка стали")
-    gr = forms.ChoiceField(label="Марка стали")
+    kd = forms.ModelChoiceField(queryset=Kind.objects.all(), label="Вид продукции")
+    con = forms.ModelChoiceField(queryset=Consumer.objects.all(), label="Потребитель")
+    gr = forms.ModelChoiceField(queryset=Grade.objects.all(), label="Марка стали")
 
     
 class AddDataForm(forms.ModelForm):
